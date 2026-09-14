@@ -31,4 +31,5 @@ def delay_average():
         contents=[system_prompt]+contents
     )
 
-    return res.text
+    return {"output":res.text}
+
