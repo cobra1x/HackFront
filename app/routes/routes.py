@@ -38,23 +38,22 @@ def delay_average():
 def liquidity(data: LiquidityInput):
 
     if data.past_delay_days is None:
-        risk_score = 45
-        advance_rate = 0.45
+        risk_score = 55 - (data.buyer_tier * 5) - (data.tenor_days * 0.1)
     else:
-        risk_score = 100 - (data.past_delay_days * 2) - (data.tenor_days * 0.2) + (data.buyer_tier * 5)
-        risk_score = max(0, min(100, risk_score))
+        risk_score = 100 - (data.past_delay_days * 2) - (data.tenor_days * 0.2) - (data.buyer_tier * 5)
 
-        if risk_score >= 80:
-            advance_rate = 0.90
-        elif risk_score >= 65:
-            advance_rate = 0.75
-        elif risk_score >= 50:
-            advance_rate = 0.60
-        else:
-            advance_rate = 0.40
+    risk_score = max(0, min(100, risk_score))
+
+    if risk_score >= 80:
+        advance_rate = 0.90
+    elif risk_score >= 65:
+        advance_rate = 0.75
+    elif risk_score >= 50:
+        advance_rate = 0.60
+    else:
+        advance_rate = 0.40
 
     principal = data.invoice_amount * advance_rate
-
     fee = principal * (0.025 + 0.005) * (data.tenor_days / 360)
     reserve = data.invoice_amount - principal
     net_advance = principal - fee
