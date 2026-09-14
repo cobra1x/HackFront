@@ -28,7 +28,7 @@ def upload(files:list[UploadFile] = File(...)):
 @router.get("/delay_average")
 def delay_average():
     res=client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="gemini-3.5-flash-lite",
         contents=[system_prompt]+contents
     )
 
@@ -36,7 +36,7 @@ def delay_average():
 
 @router.post("/liquidity")
 def liquidity(data: LiquidityInput):
-    
+
     if data.past_delay_days is None:
         risk_score = 65 - (data.buyer_tier * 5) - (data.tenor_days * 0.1)
         history_status = "NEW_CUSTOMER"

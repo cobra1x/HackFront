@@ -2,7 +2,7 @@ system_prompt="""
     Analyze all the provided invoice and payment receipt documents.
 
     For each invoice:
-    1. Find the invoice date and invoice ID and payment terms or payment due date .
+    1. Find the invoice date and invoice ID and  payment due date .
     2. Find the corresponding payment receipt.
     3. Find the payment date.
     4. Calculate payment delay in days.
